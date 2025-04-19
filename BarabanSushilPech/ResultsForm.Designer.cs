@@ -56,6 +56,7 @@
             TextBox_Gvl = new TextBox();
             TextBox_B = new TextBox();
             Button_Close = new Button();
+            Button_Save = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridView_Table).BeginInit();
             SuspendLayout();
@@ -310,7 +311,7 @@
             // 
             // Button_Close
             // 
-            Button_Close.Location = new Point(275, 727);
+            Button_Close.Location = new Point(401, 727);
             Button_Close.Name = "Button_Close";
             Button_Close.Size = new Size(250, 29);
             Button_Close.TabIndex = 48;
@@ -318,11 +319,22 @@
             Button_Close.UseVisualStyleBackColor = true;
             Button_Close.Click += Button_Close_Click;
             // 
+            // Button_Save
+            // 
+            Button_Save.Location = new Point(145, 727);
+            Button_Save.Name = "Button_Save";
+            Button_Save.Size = new Size(250, 29);
+            Button_Save.TabIndex = 48;
+            Button_Save.Text = "Сохранить отчёт в файле Excel";
+            Button_Save.UseVisualStyleBackColor = true;
+            Button_Save.Click += Button_Save_Click;
+            // 
             // ResultsForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 761);
+            Controls.Add(Button_Save);
             Controls.Add(Button_Close);
             Controls.Add(groupBox1);
             Controls.Add(label7);
@@ -346,34 +358,34 @@
         }
 
         #endregion
-
-        private Label label20;
-        private Label label1;
-        private TextBox TextBox_Xv;
-        private TextBox TextBox_W1c;
-        private Label label4;
-        private TextBox TextBox_W2c;
-        private Label label5;
-        private TextBox TextBox_Tm1;
-        private Label label6;
-        private TextBox TextBox_Tm2;
-        private Label label7;
-        private GroupBox groupBox1;
-        private Label label26;
-        private Label label25;
-        private Label label24;
-        private TextBox TextBox_KIT;
-        private TextBox TextBox_KPD;
-        private TextBox TextBox_B;
-        private Label label28;
-        private Label label29;
-        private Label label27;
-        private TextBox TextBox_Qisp;
-        private TextBox TextBox_Gvl;
         private Button Button_Close;
-        private DataGridView DataGridView_Table;
         private DataGridViewTextBoxColumn CalculationName;
         private DataGridViewTextBoxColumn DataKilojoules;
         private DataGridViewTextBoxColumn DataPercent;
+        public Label label20;
+        public Label label1;
+        public TextBox TextBox_Xv;
+        public TextBox TextBox_W1c;
+        public Label label4;
+        public TextBox TextBox_W2c;
+        public Label label5;
+        public TextBox TextBox_Tm1;
+        public Label label6;
+        public TextBox TextBox_Tm2;
+        public Label label7;
+        public GroupBox groupBox1;
+        public Label label26;
+        public Label label25;
+        public Label label24;
+        public TextBox TextBox_KIT;
+        public TextBox TextBox_KPD;
+        public TextBox TextBox_B;
+        public Label label28;
+        public Label label29;
+        public Label label27;
+        public TextBox TextBox_Qisp;
+        public TextBox TextBox_Gvl;
+        public DataGridView DataGridView_Table;
+        private Button Button_Save;
     }
 }

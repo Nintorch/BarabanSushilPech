@@ -43,8 +43,6 @@ namespace BarabanSushilPech
 
             // Тепловой баланс
 
-            // Сохранение в Excel
-
             double Q1 = CalculateQ1(data, w1c, w2c, startAvgMassTemp, finalAvgMassTemp);
             double q2 = Calculateq2(data, xv);
             double q3 = Calculateq3(data);
@@ -100,5 +98,8 @@ namespace BarabanSushilPech
 
         private void Button_Close_Click(object sender, EventArgs e)
             => Close();
+
+        private void Button_Save_Click(object sender, EventArgs e)
+            => ExcelReport.GenerateReport(this);
     }
 }
