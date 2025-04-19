@@ -47,17 +47,17 @@
         public static double CalculateQ5trp(StartData data)
             => CheckedCalculation(() => data.Av * (data.Tst2 - data.Tv) * Math.PI * data.D * data.L * 0.001, data);
 
-        public static double CalculateQ5ttop(double qnr)
+        public static double Calculateq5ttop(double qnr)
             => CheckedCalculation(() => 0.1 * qnr, qnr);
 
-        public static double CalculateB(double qnr, double Q1, double q2, double q3, double Q5trp, double Q5ttop)
-            => CheckedCalculation(() => (Q1 + Q5trp) / (qnr - q2 - q3 - Q5ttop), qnr, Q1, q2, q3, Q5trp, Q5ttop);
+        public static double CalculateB(double qnr, double Q1, double q2, double q3, double Q5trp, double q5ttop)
+            => CheckedCalculation(() => (Q1 + Q5trp) / (qnr - q2 - q3 - q5ttop), qnr, Q1, q2, q3, Q5trp, q5ttop);
 
         public static double CalculateKPD(double Q1, double B, double qnr)
             => CheckedCalculation(() => Q1 / B / qnr, Q1, B, qnr);
 
-        public static double CalculateKIT(double Q1, double Q5ttop, double qnr)
-            => CheckedCalculation(() => (Q1 + Q5ttop) / qnr, Q1, Q5ttop, qnr);
+        public static double CalculateKIT(double Q1, double Q5trp, double B, double qnr)
+            => CheckedCalculation(() => (Q1 + Q5trp) / B / qnr, Q1, Q5trp, B, qnr);
 
         public static double CalculateQisp(double B, double qnr, double Gvl)
             => CheckedCalculation(() => B * qnr / Gvl, B, qnr, Gvl);

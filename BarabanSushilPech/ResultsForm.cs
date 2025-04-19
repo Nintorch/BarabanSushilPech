@@ -15,9 +15,17 @@ namespace BarabanSushilPech
 {
     public partial class ResultsForm : Form
     {
+        private double fullEnergy;
+
         public ResultsForm(StartData data)
         {
             InitializeComponent();
+
+            foreach (DataGridViewColumn column in DataGridView_Table.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
             MakeCalculations(data);
         }
 
@@ -35,30 +43,38 @@ namespace BarabanSushilPech
 
             // Тепловой баланс
 
-            // Приход теплоты
-            double Qobsh = SetData(TextBox_Qobsh1, data.Qnr);
+            // Сохранение в Excel
 
-            // Расход теплоты
-            double Q1 = SetData(TextBox_Q1, CalculateQ1(data, w1c, w2c, startAvgMassTemp, finalAvgMassTemp));
-            double q2 = SetData(TextBox_Q2_1, Calculateq2(data, xv));
-            double q3 = SetData(TextBox_Q3_1, Calculateq3(data));
-            double Q5trp = SetData(TextBox_Q5trp, CalculateQ5trp(data));
-            double Q5ttop = SetData(TextBox_Q5ttop_1, CalculateQ5ttop(data.Qnr));
+            double Q1 = CalculateQ1(data, w1c, w2c, startAvgMassTemp, finalAvgMassTemp);
+            double q2 = Calculateq2(data, xv);
+            double q3 = Calculateq3(data);
+            double Q5trp = CalculateQ5trp(data);
+            double q5ttop = Calculateq5ttop(data.Qnr);
 
             // Раход топлива
-            double B = CalculateB(data.Qnr, Q1, q2, q3, Q5trp, Q5ttop);
+            double B = CalculateB(data.Qnr, Q1, q2, q3, Q5trp, q5ttop);
             SetData(TextBox_B, B * 100);
 
-            // Теплота с учётом расхода топлива
-            SetData(TextBox_Qobsh, Qobsh * B);
-            SetData(TextBox_Q2, q2 * B);
-            SetData(TextBox_Q3, q3 * B);
-            SetData(TextBox_Q5ttop, Q5ttop * B);
-
             SetData(TextBox_KPD, CalculateKPD(Q1, B, data.Qnr) * 100);
-            SetData(TextBox_KIT, CalculateKIT(Q1, Q5ttop, data.Qnr) * 100);
+            SetData(TextBox_KIT, CalculateKIT(Q1, Q5trp, B, data.Qnr) * 100);
             double Gvl = SetData(TextBox_Gvl, CalculateGvl(data.Gm, w1c, w2c));
             SetData(TextBox_Qisp, CalculateQisp(B, data.Qnr, Gvl));
+
+            fullEnergy = data.Qnr * B;
+
+            // Приход теплоты
+            AddCalculationSection("Приход теплоты:");
+            AddCalculationRow("Химическая теплота топлива", fullEnergy);
+
+            // Расход теплоты
+            AddCalculationSection("Расход теплоты:");
+            AddCalculationRow("Затраты теплоты на нагрев материала и испарение влаги", Q1);
+            AddCalculationRow("Потери теплоты с отходящими газами", q2 * B);
+            AddCalculationRow("Потери теплоты вследствие химического недожога", q3 * B);
+            AddCalculationRow("Потери теплоты рабочим пространством и с приспособлениями", Q5trp);
+            AddCalculationRow("Потери теплоты топкой", q5ttop * B);
+
+            AddCalculationResult();
         }
 
         private static double SetData(TextBox tb, double value)
@@ -66,6 +82,21 @@ namespace BarabanSushilPech
             tb.Text = Math.Round(value, 3).ToString();
             return value;
         }
+
+        private void AddCalculationSection(string name)
+            => MakeBold(DataGridView_Table.Rows.Add(name));
+
+        private double AddCalculationRow(string name, double value)
+        {
+            DataGridView_Table.Rows.Add(name, Math.Round(value, 3), Math.Round(value / fullEnergy * 100, 3));
+            return value;
+        }
+
+        private void AddCalculationResult()
+            => MakeBold(DataGridView_Table.Rows.Add("ИТОГО:", Math.Round(fullEnergy, 3), 100));
+
+        private void MakeBold(int rowIdx)
+            => DataGridView_Table.Rows[rowIdx].Cells[0].Style.Font = new Font(Font, FontStyle.Bold);
 
         private void Button_Close_Click(object sender, EventArgs e)
             => Close();

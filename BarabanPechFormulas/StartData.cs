@@ -91,12 +91,8 @@ namespace BarabanPechFormulas
 
         public bool CheckCorrectness()
         {
-            List<double> values = [
-                Gm, W1B, W2B, Qnr, Va, T1, T2, Tv, Tst2, Nedozhog, Av, D, L,
-                If, I0, Iv, I2, I1vl, I2v
-                ];
-
-            return values.All(Formulas.ValidateInput);
+            // Опять рефлексия...
+            return GetType().GetProperties().Select(p => (double?)p.GetValue(this) ?? 0.0).All(Formulas.ValidateInput);
         }
     }
 }
