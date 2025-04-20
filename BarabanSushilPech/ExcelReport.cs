@@ -1,7 +1,5 @@
 ﻿using OfficeOpenXml;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using OfficeOpenXml.Style;
-using System.Windows.Forms;
 
 namespace BarabanSushilPech
 {
@@ -11,7 +9,7 @@ namespace BarabanSushilPech
         ExcelWorksheet sheet;
         ResultsForm results;
 
-        public ExcelReport(ResultsForm results)
+        private ExcelReport(ResultsForm results)
         {
             this.results = results;
             sheet = package.Workbook.Worksheets.Add("Отчет о расчёте барабанной сушильной печи");
